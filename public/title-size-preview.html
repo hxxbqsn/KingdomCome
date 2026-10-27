@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#19191b">
+  <title>Kingdom Come · 大标题字号</title>
+  <link rel="stylesheet" href="/title-size-preview.css">
+</head>
+<body>
+  <header class="toolbar">
+    <div class="toolbar-heading"><strong>大标题字号</strong><span>三个页面共用，只调整电脑端字号</span><a href="/" target="_blank" rel="noopener">正式网站 ↗</a></div>
+    <div class="toolbar-controls">
+      <nav aria-label="预览页面"><button data-page="/" aria-pressed="true">家族档案</button><button data-page="/trees" aria-pressed="false">家族谱系</button><button data-page="/people" aria-pressed="false">人物名册</button></nav>
+      <div class="size-controls"><label for="title-size">字号</label><input id="title-size" type="range" min="28" max="96" step="1" value="56"><label class="number-control"><input id="size-number" type="number" min="28" max="96" value="56" aria-label="字号数值"><span>px</span></label><button id="copy-size">复制选择</button></div>
+    </div>
+  </header>
+  <main class="preview"><iframe id="page-preview" src="/" title="电脑端大标题实时预览"></iframe><div id="loading" role="status">正在载入页面…</div></main>
+  <footer><span id="current-size" role="status">当前预览：56 px</span><span>选择仅保存在本预览页，正式网站未修改。</span></footer>
+  <dialog id="copy-dialog"><p>复制下面的选择发给我：</p><textarea id="choice-text" readonly aria-label="字号选择"></textarea><button id="close-dialog">关闭</button></dialog>
+  <script type="module" src="/title-size-preview.js"></script>
+</body>
+</html>

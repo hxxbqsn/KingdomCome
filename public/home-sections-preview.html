@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#19191b">
+  <title>Kingdom Come · 首页下方排版方案</title>
+  <link rel="stylesheet" href="/home-sections-preview.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="preview-header"><a class="brand" href="/" target="_blank" rel="noopener">Kingdom Come</a><span class="header-label">首页下方 · 排版方案</span><a class="return-link" href="/" target="_blank" rel="noopener">正式首页 ↗</a></header>
+  <main class="preview-workspace">
+    <aside class="scheme-rail">
+      <div class="rail-heading"><span>四套排版</span><small>01 — 04</small></div>
+      <div class="scheme-list" role="group" aria-label="切换排版方案">
+        <button class="scheme active" data-layout="folio" aria-pressed="true"><span class="scheme-number">01</span><span class="scheme-title">馆藏对页</span><span class="scheme-sketch sketch-folio" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><small>左侧谱系，右侧肖像方阵</small></button>
+        <button class="scheme" data-layout="scroll" aria-pressed="false"><span class="scheme-number">02</span><span class="scheme-title">谱系长卷</span><span class="scheme-sketch sketch-scroll" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><small>横向展开，底部轻量人物带</small></button>
+        <button class="scheme" data-layout="index" aria-pressed="false"><span class="scheme-number">03</span><span class="scheme-title">档案索引</span><span class="scheme-sketch sketch-index" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><small>左侧人物索引，右侧谱系图</small></button>
+        <button class="scheme" data-layout="gallery" aria-pressed="false"><span class="scheme-number">04</span><span class="scheme-title">肖像画廊</span><span class="scheme-sketch sketch-gallery" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><small>先看肖像，再沿家族关系展开</small></button>
+      </div>
+      <p class="rail-note">两个区域可以分别选。<br>这里的选择只保存在预览中。</p>
+    </aside>
+    <section class="preview-main" aria-label="排版预览">
+      <div class="canvas-toolbar"><div><span id="scheme-code">01</span><strong id="scheme-name">馆藏对页</strong></div><div class="canvas-controls"><select id="preview-width" aria-label="预览尺寸"><option value="1280">电脑</option><option value="1024">平板</option><option value="390">手机</option></select><select id="preview-zoom" aria-label="显示比例"><option value="fit">适合窗口</option><option value="1">100%</option></select><button id="focus-view" aria-pressed="false">展开画面 ↗</button></div></div>
+      <div id="canvas-scroll"><div id="canvas-stage"><iframe id="sections-frame" src="/" title="首页家族谱系与人物名册方案预览"></iframe></div><div id="loading" role="status">正在载入现有家谱与肖像…</div></div>
+      <div class="canvas-status"><span id="preview-state" role="status">载入中</span><span>可点击人物肖像及页面入口</span></div>
+    </section>
+  </main>
+  <footer class="selection-dock">
+    <div class="choices"><span id="tree-choice">家谱区：尚未选择</span><span id="people-choice">人物区：尚未选择</span></div>
+    <div class="choose-actions"><button id="choose-tree" aria-pressed="false">家谱区用这版</button><button id="choose-people" aria-pressed="false">人物区用这版</button><button id="copy-choice" class="primary" disabled>复制选择 ↗</button><button id="download-choice" disabled>下载配置</button></div>
+  </footer>
+  <dialog id="choice-dialog"><div class="dialog-heading"><h2>排版选择</h2><button id="close-dialog" aria-label="关闭">×</button></div><p>将这段选择发给我，就能继续调整正式首页。</p><textarea id="choice-text" readonly aria-label="排版选择文本"></textarea><button id="select-choice">选中文本</button></dialog>
+  <script type="module" src="/home-sections-preview.js"></script>
+</body>
+</html>

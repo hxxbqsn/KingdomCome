@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Kingdom Come · 人物档案排版预览</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400;500&display=swap');
+    :root { color-scheme: dark; --bg:#1a1b1d; --panel:#202123; --rule:#494b4d; --ink:#e8e7e2; --muted:#aaa9a6; --accent:#82978b; font-family:'Noto Sans SC',sans-serif; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#222529; color:var(--ink); }
+    button,input { font:inherit; }
+    button { cursor:pointer; }
+    a { color:var(--ink); text-decoration:none; }
+    .topbar { display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px clamp(18px,3vw,48px);background:#1a1b1d;border-bottom:1px solid var(--rule); }
+    .brand { font:27px Georgia,serif; }
+    .topbar nav { display:flex;gap:20px;font-size:11px; }
+    .topbar a:hover { color:#b8cabd; }
+    main { max-width:1750px;margin:auto;padding:26px clamp(16px,3vw,48px) 50px; }
+    .heading { display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:22px; }
+    h1 { font:400 clamp(32px,4vw,53px) 'Noto Serif SC',serif;margin:0; }
+    .heading p { color:var(--muted);font-size:11px;line-height:1.8;max-width:370px;margin:0; }
+    .workspace { display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px;align-items:start; }
+    .controls { position:sticky;top:18px;border:1px solid var(--rule);background:#1c1e20;padding:20px; }
+    .controls h2 { font:400 23px 'Noto Serif SC',serif;margin:0 0 15px; }
+    .preset-row { display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:17px; }
+    .preset-row button { border:1px solid var(--rule);background:none;color:var(--ink);padding:8px 3px;font-size:10px; }
+    .preset-row button:hover,.preset-row button.selected { border-color:var(--accent);background:#304139; }
+    .control { display:block;border-top:1px solid var(--rule);padding:11px 0; }
+    .control span { display:flex;justify-content:space-between;gap:9px;color:#d4d4cf;font-size:11px; }
+    .control output { color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap; }
+    .control input { display:block;width:100%;margin:10px 0 0;accent-color:var(--accent); }
+    .copy { width:100%;margin-top:13px;border:1px solid var(--accent);background:#304139;color:var(--ink);padding:11px;font-size:11px; }
+    .copy:hover { background:#40584b; }
+    .controls>small { display:block;color:var(--muted);font-size:10px;line-height:1.65;margin-top:10px; }
+
+    .record { --photo-h:320px;--cell-pad:14px;--name-width:45%;--label-gap:7px;--body-leading:1.65;--row-pad:11px;display:grid;grid-template-columns:15% 22% minmax(0,1fr);border:1px solid var(--rule);background:#1d1e20;min-width:0; }
+    .rail { background:#171819;border-right:1px solid var(--rule); }
+    .rail>div { border-bottom:1px solid var(--rule);padding:17px 12px;color:#d2d2cd;font-size:11px; }
+    .rail>div:first-child { color:var(--ink); }
+    .rail .dim { color:var(--muted);font-size:10px;padding-top:6px;border:0; }
+    .related { min-width:0;border-right:1px solid var(--rule); }
+    .column-head,.record-head { display:flex;justify-content:space-between;align-items:center;min-height:42px;border-bottom:1px solid var(--rule);padding:0 14px;font-size:10px; }
+    .related-list { display:grid;gap:13px;padding:15px; }
+    .related-list img { display:block;width:100%;aspect-ratio:.85;object-fit:cover;object-position:center 25%; }
+    .related-list span { display:block;padding-top:5px;font-size:10px; }
+    .main-record { min-width:0; }
+    .record-head { color:var(--muted); }
+    .record-photo { display:flex;justify-content:center;padding:18px 24px 13px; }
+    .record-photo img { display:block;width:min(100%,430px);height:var(--photo-h);object-fit:cover;object-position:center 28%; }
+    .caption { display:grid;grid-template-columns:var(--name-width) minmax(0,1fr);border-block:1px solid var(--rule); }
+    .caption>div { min-width:0;padding:var(--cell-pad); }
+    .caption>div+div { border-left:1px solid var(--rule); }
+    .caption span { display:block;border-bottom:1px solid var(--rule);color:var(--accent);padding-bottom:8px;font-size:10px; }
+    .caption h2 { font:400 clamp(22px,2.5vw,38px)/1.35 'Noto Serif SC',serif;margin:var(--label-gap) 0 4px;overflow-wrap:anywhere; }
+    .caption p { margin:var(--label-gap) 0 0;color:#d2d0ca;font-size:12px;line-height:var(--body-leading); }
+    .caption .years { color:var(--muted); }
+    .facts { display:flex;flex-wrap:wrap;gap:8px 17px;padding:var(--row-pad) var(--cell-pad);border-bottom:1px solid var(--rule);color:var(--muted);font-size:10px; }
+    .biography,.relations { padding:calc(var(--cell-pad) + 5px) var(--cell-pad);border-bottom:1px solid var(--rule); }
+    .biography h3,.relations h3 { font:400 22px 'Noto Serif SC',serif;margin:0 0 var(--label-gap); }
+    .biography p { max-width:58ch;font:12px/var(--body-leading) 'Noto Serif SC',serif;color:#d2d0ca;margin:0; }
+    .relation-row { display:grid;grid-template-columns:70px 1fr;gap:12px;border-top:1px solid var(--rule);padding:var(--row-pad) 0;font-size:11px; }
+    .relation-row>span { color:var(--muted); }
+    .relation-row:last-child { padding-bottom:0; }
+    @media(max-width:1100px) { .workspace { grid-template-columns:1fr; }.controls { position:static; }.control-list { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px; } }
+    @media(max-width:680px) { .topbar { display:block; }.topbar nav { margin-top:10px; }.heading { display:block; }.heading p { margin-top:8px; }.control-list { grid-template-columns:1fr; }.record { grid-template-columns:1fr; }.rail { display:none; }.related { order:2;border-top:1px solid var(--rule);border-right:0; }.related-list { display:flex;overflow:auto; }.related-list>div { min-width:90px;width:90px; }.related-list img { height:95px; }.main-record { order:1; }.record-photo img { height:min(var(--photo-h),70vw); }.caption { grid-template-columns:1fr; }.caption>div+div { border-left:0;border-top:1px solid var(--rule); } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/">Kingdom Come</a><nav><a href="/people/p3">查看实际人物档案 ↗</a><a href="design-preview.html">其他设计选项 ↗</a></nav></header>
+  <main>
+    <div class="heading"><h1>人物档案排版预览</h1><p>拖动滑块，比较图片、姓名、记录和信息行的间距。选好后复制配置；本页不会修改档案数据。</p></div>
+    <div class="workspace">
+      <aside class="controls"><h2>排版设置</h2><div class="preset-row" aria-label="快速预设"><button type="button" data-preset="compact" aria-pressed="false">紧密</button><button type="button" data-preset="balanced" aria-pressed="false">均衡</button><button type="button" data-preset="airy" aria-pressed="false">留白</button></div><div class="control-list">
+        <label class="control"> <span>主肖像高度 <output for="photo">320 px</output></span><input id="photo" data-key="photo" type="range" min="250" max="460" step="10" value="320"/></label>
+        <label class="control"> <span>信息格内边距 <output for="padding">14 px</output></span><input id="padding" data-key="padding" type="range" min="10" max="40" step="2" value="14"/></label>
+        <label class="control"> <span>姓名栏宽度 <output for="width">45%</output></span><input id="width" data-key="width" type="range" min="35" max="60" step="1" value="45"/></label>
+        <label class="control"> <span>标签到内容间距 <output for="label">7 px</output></span><input id="label" data-key="label" type="range" min="4" max="25" step="1" value="7"/></label>
+        <label class="control"> <span>资料行高 <output for="row">11 px</output></span><input id="row" data-key="row" type="range" min="8" max="30" step="1" value="11"/></label>
+        <label class="control"> <span>文字行距 <output for="leading">1.65</output></span><input id="leading" data-key="leading" type="range" min="1.4" max="2.3" step="0.05" value="1.65"/></label>
+      </div><button class="copy" type="button" id="copy">复制这组排版 ↗</button><small id="choice">当前：已应用到人物档案</small></aside>
+      <div class="record" id="record">
+        <aside class="rail"><div>← 人物名册</div><div>人物</div><div class="dim">阿德里安·瓦伦</div><div>关系</div><div>相关资料</div></aside>
+        <div class="related"><div class="column-head">相关人物 <span>04</span></div><div class="related-list"><div><img src="assets/portrait-art-1.jpg" alt="埃德蒙·瓦伦"/><span>埃德蒙·瓦伦</span></div><div><img src="assets/portrait-art-2.jpg" alt="伊莎贝拉·瓦伦"/><span>伊莎贝拉·瓦伦</span></div></div></div>
+        <article class="main-record"><div class="record-head"><span>人物档案 / 瓦伦家族</span><span>编辑 ↗</span></div><div class="record-photo"><img src="assets/portrait-art-3.jpg" alt="阿德里安·瓦伦"/></div><div class="caption"><div><span>姓名</span><h2>阿德里安·瓦伦</h2><p class="years">1352 — 1413</p></div><div><span>记录</span><p>瓦伦继承人，与瑞文家族结成婚盟。</p></div></div><div class="facts"><span>出生 · 1352</span><span>逝世 · 1413</span><span>性别 · 男</span></div><section class="biography"><h3>人物生平</h3><p>瓦伦继承人，与瑞文家族结成婚盟。其个人记录与两大家族的谱系相连。</p></section><section class="relations"><h3>亲属关系</h3><div class="relation-row"><span>父母</span><div>埃德蒙·瓦伦　伊莎贝拉·瓦伦</div></div><div class="relation-row"><span>配偶</span><div>艾莉诺·瑞文</div></div><div class="relation-row"><span>子女</span><div>朱利安·瓦伦</div></div></section></article>
+      </div>
+    </div>
+  </main>
+  <script>
+    const presets={compact:{photo:300,padding:16,width:45,label:8,row:12,leading:1.65},balanced:{photo:360,padding:24,width:43,label:13,row:17,leading:1.85},airy:{photo:430,padding:32,width:40,label:18,row:23,leading:2}};
+    const state={photo:320,padding:14,width:45,label:7,row:11,leading:1.65};
+    const record=document.getElementById('record');
+    const labels={photo:'主肖像高度',padding:'信息格内边距',width:'姓名栏宽度',label:'标签到内容间距',row:'资料行高',leading:'文字行距'};
+    const display=(key,value)=>key==='width'?value+'%':key==='leading'?Number(value).toFixed(2):value+' px';
+    const render=()=>{record.style.setProperty('--photo-h',state.photo+'px');record.style.setProperty('--cell-pad',state.padding+'px');record.style.setProperty('--name-width',state.width+'%');record.style.setProperty('--label-gap',state.label+'px');record.style.setProperty('--row-pad',state.row+'px');record.style.setProperty('--body-leading',state.leading);document.querySelectorAll('[data-key]').forEach(input=>{input.value=state[input.dataset.key];input.parentElement.querySelector('output').textContent=display(input.dataset.key,state[input.dataset.key]);});};
+    document.querySelectorAll('[data-preset]').forEach(button=>button.addEventListener('click',()=>{Object.assign(state,presets[button.dataset.preset]);document.querySelectorAll('[data-preset]').forEach(item=>{item.classList.toggle('selected',item===button);item.setAttribute('aria-pressed',item===button);});document.getElementById('choice').textContent='当前：'+button.textContent+'预设';render();}));
+    document.querySelectorAll('[data-key]').forEach(input=>input.addEventListener('input',()=>{state[input.dataset.key]=Number(input.value);document.querySelectorAll('[data-preset]').forEach(button=>{button.classList.remove('selected');button.setAttribute('aria-pressed','false');});document.getElementById('choice').textContent='当前：自定义';render();}));
+    document.getElementById('copy').addEventListener('click',async()=>{const result='Kingdom Come 人物档案排版：'+Object.entries(state).map(([key,value])=>labels[key]+' '+display(key,value)).join('；')+'。';try{await navigator.clipboard.writeText(result);document.getElementById('copy').textContent='已复制 ✓';}catch{document.getElementById('copy').textContent=result;}setTimeout(()=>document.getElementById('copy').textContent='复制这组排版 ↗',2500);});
+  </script>
+</body>
+</html>

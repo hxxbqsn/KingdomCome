@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181b19">
+  <title>Kingdom Come · 首页排版调整</title>
+  <link rel="stylesheet" href="/home-layout-editor.css">
+</head>
+<body>
+  <header class="toolbar">
+    <a class="brand" href="/" target="_blank" rel="noopener">Kingdom Come <span>首页排版</span></a>
+    <div class="toolbar-group"><button id="undo" title="Ctrl / ⌘ + Z" disabled>↶ 撤销</button><button id="redo" title="Ctrl / ⌘ + Shift + Z" disabled>↷ 重做</button></div>
+    <div class="toolbar-group"><select id="device" aria-label="画布尺寸"><option value="1440">电脑 · 1440</option><option value="1024">平板 · 1024</option><option value="390">手机 · 390</option></select><select id="zoom" aria-label="画布显示比例"><option value="fit">适合窗口</option><option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option></select></div>
+    <button id="preview" aria-pressed="false">预览效果</button>
+    <button id="export" class="primary">导出调整 ↗</button>
+    <button id="mobile-properties" aria-pressed="false">属性</button>
+  </header>
+  <main class="workspace">
+    <aside class="layers-panel">
+      <div class="panel-heading"><h1>首页图层</h1><span id="layer-count"></span></div>
+      <p class="panel-note">点击选择，拖动移动；拖动边角缩放。</p>
+      <div id="layers"></div>
+      <div class="layer-bottom"><label><input id="snap" type="checkbox"> 8 px 网格吸附</label><button id="reset-all" class="subtle">重置当前尺寸布局</button></div>
+    </aside>
+    <section class="canvas-panel" aria-label="首页编辑画布">
+      <div class="canvas-meta"><span id="canvas-title">电脑画布 · 1440 px</span><span id="save-state" role="status">正在载入首页…</span></div>
+      <div id="canvas-scroll" tabindex="-1"><div id="stage"><iframe id="homepage" src="/" title="可编辑的首页预览"></iframe></div></div>
+      <footer class="canvas-help"><span>方向键微调 · Shift 加速 · Ctrl / ⌘ Z 撤销</span><span>仅保存预览布局</span></footer>
+    </section>
+    <aside class="properties-panel">
+      <div class="panel-heading"><h2>调整属性</h2><span id="selection-kind">未选择</span></div>
+      <div id="empty-selection"><span>↖</span><p>点选画布中的文字或模块<br>也可以从左侧图层选择</p></div>
+      <form id="properties" hidden onsubmit="return false">
+        <h3 id="selection-name"></h3>
+        <div class="property-grid"><label>水平位移 X<input name="x" type="number" step="1"></label><label>垂直位移 Y<input name="y" type="number" step="1"></label><label>宽度<input name="w" type="number" min="16" step="1"></label><label>高度<input name="h" type="number" min="16" step="1"></label></div>
+        <p class="field-note" id="position-note"></p>
+        <div class="align-row"><button type="button" data-align="left">靠左</button><button type="button" data-align="center">居中</button><button type="button" data-align="right">靠右</button></div>
+        <fieldset id="text-properties"><legend>文字</legend><label>内容<textarea name="text" rows="2"></textarea></label><div class="property-grid"><label>字号 px<input name="fontSize" type="number" min="8" max="240" step="1"></label><label>行距<input name="lineHeight" type="number" min="0.8" max="4" step="0.05"></label></div><label>字体<select name="font"><option value="">原有字体</option><option value="'Noto Serif SC', serif">宋体</option><option value="'Noto Sans SC', sans-serif">黑体</option><option value="'Cormorant Garamond', 'Noto Serif SC', serif">优雅衬线</option><option value="'Cinzel', 'Noto Serif SC', serif">碑铭衬线</option></select></label><label class="check-row"><input id="scale-text" type="checkbox" checked> 拖动大小时同步调整字号</label></fieldset>
+        <fieldset id="image-properties"><legend>图片</legend><label>显示方式<select name="fit"><option value="cover">填满框架</option><option value="contain">显示完整图片</option></select></label><label>图片垂直位置<input name="imageY" type="range" min="0" max="100" step="1"></label></fieldset>
+        <fieldset><legend>层级与显示</legend><div class="property-grid"><label>叠放层级<input name="z" type="number" step="1"></label><label>透明度 %<input name="opacity" type="number" min="0" max="100" step="5"></label></div><label class="check-row"><input name="locked" type="checkbox"> 锁定位置与大小</label><label class="check-row"><input name="hidden" type="checkbox"> 隐藏这个图层</label></fieldset>
+        <button id="reset-one" type="button" class="subtle full">还原这个图层</button>
+      </form>
+    </aside>
+  </main>
+  <dialog id="export-dialog"><div class="dialog-heading"><div><small>首页排版</small><h2>保存你的调整</h2></div><button id="close-export" aria-label="关闭">×</button></div><p>下载配置文件发给我，便可按这份布局调整正式首页。</p><textarea id="export-json" readonly aria-label="首页布局配置"></textarea><div class="export-actions"><button id="import">导入配置</button><input id="import-file" type="file" accept=".json,application/json" hidden><button id="copy">复制配置</button><button id="download" class="primary">下载 JSON ↗</button></div><span id="export-status" role="status"></span></dialog>
+  <script type="module" src="/home-layout-editor.js"></script>
+</body>
+</html>
